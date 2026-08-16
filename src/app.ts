@@ -4,7 +4,8 @@ import cors from "cors";
 
 import config from "./config";
 import cookieParser from "cookie-parser";
-import { userRouter } from "./modules/user/user.route";
+import { authRouter } from "./modules/auth/auth.route";
+
 
 app.use(cors({origin : config.app_url , credentials : true}))
 app.use(express.json())
@@ -15,6 +16,6 @@ app.get("/" , (req : Request, res : Response ) => {
   res.send("hello world")
 })
 
-app.use("/api/auth" , userRouter)
+app.use("/api/auth" , authRouter)
 
 export default app;

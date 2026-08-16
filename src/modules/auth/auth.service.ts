@@ -1,7 +1,7 @@
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
 import bcrypt from "bcrypt";
-import { createUserPayload } from "./user.interface";
+import { createUserPayload, LoginPayload } from "./auth.interface";
 import { Role } from "../../../prisma/generated/prisma/enums";
 
 const createUserIntoDB = async (payload: createUserPayload) => {
@@ -17,7 +17,7 @@ const createUserIntoDB = async (payload: createUserPayload) => {
     Number(config.bcrypt_salt_rounds),
   );
 
-  return await prisma.user.create({
+  const createUser = await prisma.user.create({
     data: {
       name,
       email,
@@ -32,10 +32,43 @@ const createUserIntoDB = async (payload: createUserPayload) => {
         },
       }),
     },
+  });
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: createUser.id,
+      email: createUser.email || email,
+    },
+    omit: {
+      password: true,
+    },
     include: {
       profile: true,
     },
   });
+
+  return user;
 };
 
-export const UserService = { createUserIntoDB };
+const loginUserIntoDB = async (payload : LoginPayload) => {
+  const {email , password} = payload;
+  const user = await prisma.user.findFirstOrThrow({
+    where : {
+        email,
+    },
+  })
+ 
+  const isPasswordMatch = await bcrypt.compare(password , user.password)
+  if(!isPasswordMatch) {
+    throw new Error("password is incorrect")
+  }
+  
+  const { password: _, ...userWithoutPassword } = user;
+  return userWithoutPassword;
+}
+
+
+export const authService = {
+  createUserIntoDB,
+  loginUserIntoDB,
+};

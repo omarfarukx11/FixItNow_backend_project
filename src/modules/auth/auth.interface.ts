@@ -8,3 +8,8 @@ export interface createUserPayload {
     profilePhoto : string,
     bio : string
 }
+
+export interface LoginPayload {
+    email : string,
+    password : string
+}
