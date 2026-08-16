@@ -1,11 +1,12 @@
 model User {
     id            String        @id @default(uuid())
-    name          String        @db.VarChar(50)
+    name          String        @db.VarChar(100)
     email         String        @unique @db.VarChar(100)
-    password      String        @db.VarChar(50)
-    role          Rele          @default(CUSTOMER)
+    password      String        @db.VarChar(255)
+    role          Role          @default(CUSTOMER)
     createdAt     DateTime      @default(now())
     updatedAt     DateTime      @updatedAt
+    profile       Profile?
 
     @@map("users")
 }

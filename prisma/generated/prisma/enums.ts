@@ -9,10 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
-export const Rele = {
+export const Role = {
   CUSTOMER: 'CUSTOMER',
   TECHNICIAN: 'TECHNICIAN',
   ADMIN: 'ADMIN'
 } as const
 
-export type Rele = (typeof Rele)[keyof typeof Rele]
+export type Role = (typeof Role)[keyof typeof Role]

@@ -1,4 +1,4 @@
-enum Rele {
+ enum Role {
     CUSTOMER
     TECHNICIAN
     ADMIN
