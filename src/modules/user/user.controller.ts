@@ -2,8 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import  HttpStatus  from "http-status";
 import { UserService } from "./user.service";
 import { sendResponse } from "../../utility/sendResponse";
+import { catchAsync } from "../../utility/catchAsync";
 
-const createUser = async (req : Request , res : Response , next : NextFunction) => {
+const createUser = catchAsync(
+  async (req : Request , res : Response , next : NextFunction) => {
   const payload = req.body;
   const result = await UserService.createUserIntoDB(payload)
   sendResponse(res , {
@@ -14,5 +16,6 @@ const createUser = async (req : Request , res : Response , next : NextFunction) 
   })
   
 }
+)
 
 export const userController = {createUser}
