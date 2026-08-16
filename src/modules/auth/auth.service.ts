@@ -3,6 +3,10 @@ import { prisma } from "../../lib/prisma";
 import bcrypt from "bcrypt";
 import { createUserPayload, LoginPayload } from "./auth.interface";
 import { Role } from "../../../prisma/generated/prisma/enums";
+import jwt, { SignOptions } from 'jsonwebtoken'
+
+
+
 
 const createUserIntoDB = async (payload: createUserPayload) => {
   const { email, name, password, role, profilePhoto, bio } = payload;
@@ -63,8 +67,17 @@ const loginUserIntoDB = async (payload : LoginPayload) => {
     throw new Error("password is incorrect")
   }
   
-  const { password: _, ...userWithoutPassword } = user;
-  return userWithoutPassword;
+  const jwtPayload = {
+    id : user.id,
+    name : user.name,
+    email : user.email,
+    role : user.role
+  }
+  
+  const accessToken = jwt.sign(jwtPayload , config.jwt_access_secret , {expiresIn : config.jwt_access_expires_in} as SignOptions)
+  const refershToken = jwt.sign(jwtPayload , config.jwt_refresh_secret , { expiresIn: config.jwt_refresh_expires_in } as jwt.SignOptions)
+
+  return {accessToken , refershToken}
 }
 
 
