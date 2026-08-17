@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { createUserPayload, LoginPayload } from "./auth.interface";
 import { Role } from "../../../prisma/generated/prisma/enums";
 import jwt, { SignOptions } from 'jsonwebtoken'
+import { jwtUtitly } from "../../utility/jwt";
 
 
 
@@ -74,8 +75,8 @@ const loginUserIntoDB = async (payload : LoginPayload) => {
     role : user.role
   }
   
-  const accessToken = jwt.sign(jwtPayload , config.jwt_access_secret , {expiresIn : config.jwt_access_expires_in} as SignOptions)
-  const refershToken = jwt.sign(jwtPayload , config.jwt_refresh_secret , { expiresIn: config.jwt_refresh_expires_in } as jwt.SignOptions)
+  const accessToken = jwtUtitly.createToken(jwtPayload , config.jwt_access_secret , config.jwt_access_expires_in as SignOptions)
+  const refershToken = jwtUtitly.createToken(jwtPayload , config.jwt_refresh_secret , config.jwt_refresh_expires_in  as jwt.SignOptions)
 
   return {accessToken , refershToken}
 }
