@@ -76,11 +76,10 @@ const loginUserIntoDB = async (payload : LoginPayload) => {
   }
   
   const accessToken = jwtUtitly.createToken(jwtPayload , config.jwt_access_secret , config.jwt_access_expires_in as SignOptions)
-  const refershToken = jwtUtitly.createToken(jwtPayload , config.jwt_refresh_secret , config.jwt_refresh_expires_in  as jwt.SignOptions)
+  const refershToken = jwtUtitly.createToken(jwtPayload , config.jwt_refresh_secret , config.jwt_refresh_expires_in as SignOptions)
 
   return {accessToken , refershToken}
 }
-
 
 export const authService = {
   createUserIntoDB,
