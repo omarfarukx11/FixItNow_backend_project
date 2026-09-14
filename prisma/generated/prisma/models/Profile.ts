@@ -20,8 +20,24 @@ export type ProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$Profile
 
 export type AggregateProfile = {
   _count: ProfileCountAggregateOutputType | null
+  _avg: ProfileAvgAggregateOutputType | null
+  _sum: ProfileSumAggregateOutputType | null
   _min: ProfileMinAggregateOutputType | null
   _max: ProfileMaxAggregateOutputType | null
+}
+
+export type ProfileAvgAggregateOutputType = {
+  experience_years: number | null
+  hourly_rate: runtime.Decimal | null
+  rating_avg: runtime.Decimal | null
+  review_count: number | null
+}
+
+export type ProfileSumAggregateOutputType = {
+  experience_years: number | null
+  hourly_rate: runtime.Decimal | null
+  rating_avg: runtime.Decimal | null
+  review_count: number | null
 }
 
 export type ProfileMinAggregateOutputType = {
@@ -29,6 +45,12 @@ export type ProfileMinAggregateOutputType = {
   userId: string | null
   profilePhoto: string | null
   bio: string | null
+  experience_years: number | null
+  location: string | null
+  hourly_rate: runtime.Decimal | null
+  rating_avg: runtime.Decimal | null
+  review_count: number | null
+  availability_slots: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -38,6 +60,12 @@ export type ProfileMaxAggregateOutputType = {
   userId: string | null
   profilePhoto: string | null
   bio: string | null
+  experience_years: number | null
+  location: string | null
+  hourly_rate: runtime.Decimal | null
+  rating_avg: runtime.Decimal | null
+  review_count: number | null
+  availability_slots: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -47,17 +75,43 @@ export type ProfileCountAggregateOutputType = {
   userId: number
   profilePhoto: number
   bio: number
+  experience_years: number
+  location: number
+  hourly_rate: number
+  rating_avg: number
+  review_count: number
+  availability_slots: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
+export type ProfileAvgAggregateInputType = {
+  experience_years?: true
+  hourly_rate?: true
+  rating_avg?: true
+  review_count?: true
+}
+
+export type ProfileSumAggregateInputType = {
+  experience_years?: true
+  hourly_rate?: true
+  rating_avg?: true
+  review_count?: true
+}
+
 export type ProfileMinAggregateInputType = {
   id?: true
   userId?: true
   profilePhoto?: true
   bio?: true
+  experience_years?: true
+  location?: true
+  hourly_rate?: true
+  rating_avg?: true
+  review_count?: true
+  availability_slots?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -67,6 +121,12 @@ export type ProfileMaxAggregateInputType = {
   userId?: true
   profilePhoto?: true
   bio?: true
+  experience_years?: true
+  location?: true
+  hourly_rate?: true
+  rating_avg?: true
+  review_count?: true
+  availability_slots?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,6 +136,12 @@ export type ProfileCountAggregateInputType = {
   userId?: true
   profilePhoto?: true
   bio?: true
+  experience_years?: true
+  location?: true
+  hourly_rate?: true
+  rating_avg?: true
+  review_count?: true
+  availability_slots?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -119,6 +185,18 @@ export type ProfileAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfileMinAggregateInputType
@@ -149,6 +227,8 @@ export type ProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ProfileCountAggregateInputType | true
+  _avg?: ProfileAvgAggregateInputType
+  _sum?: ProfileSumAggregateInputType
   _min?: ProfileMinAggregateInputType
   _max?: ProfileMaxAggregateInputType
 }
@@ -158,9 +238,17 @@ export type ProfileGroupByOutputType = {
   userId: string
   profilePhoto: string | null
   bio: string | null
+  experience_years: number | null
+  location: string | null
+  hourly_rate: runtime.Decimal | null
+  rating_avg: runtime.Decimal | null
+  review_count: number | null
+  availability_slots: string | null
   createdAt: Date
   updatedAt: Date
   _count: ProfileCountAggregateOutputType | null
+  _avg: ProfileAvgAggregateOutputType | null
+  _sum: ProfileSumAggregateOutputType | null
   _min: ProfileMinAggregateOutputType | null
   _max: ProfileMaxAggregateOutputType | null
 }
@@ -188,9 +276,17 @@ export type ProfileWhereInput = {
   userId?: Prisma.StringFilter<"Profile"> | string
   profilePhoto?: Prisma.StringNullableFilter<"Profile"> | string | null
   bio?: Prisma.StringNullableFilter<"Profile"> | string | null
+  experience_years?: Prisma.IntNullableFilter<"Profile"> | number | null
+  location?: Prisma.StringNullableFilter<"Profile"> | string | null
+  hourly_rate?: Prisma.DecimalNullableFilter<"Profile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.DecimalNullableFilter<"Profile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.IntNullableFilter<"Profile"> | number | null
+  availability_slots?: Prisma.StringNullableFilter<"Profile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  service?: Prisma.ServiceListRelationFilter
+  review?: Prisma.ReviewListRelationFilter
 }
 
 export type ProfileOrderByWithRelationInput = {
@@ -198,9 +294,17 @@ export type ProfileOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   profilePhoto?: Prisma.SortOrderInput | Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience_years?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrderInput | Prisma.SortOrder
+  rating_avg?: Prisma.SortOrderInput | Prisma.SortOrder
+  review_count?: Prisma.SortOrderInput | Prisma.SortOrder
+  availability_slots?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  service?: Prisma.ServiceOrderByRelationAggregateInput
+  review?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -211,9 +315,17 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   profilePhoto?: Prisma.StringNullableFilter<"Profile"> | string | null
   bio?: Prisma.StringNullableFilter<"Profile"> | string | null
+  experience_years?: Prisma.IntNullableFilter<"Profile"> | number | null
+  location?: Prisma.StringNullableFilter<"Profile"> | string | null
+  hourly_rate?: Prisma.DecimalNullableFilter<"Profile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.DecimalNullableFilter<"Profile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.IntNullableFilter<"Profile"> | number | null
+  availability_slots?: Prisma.StringNullableFilter<"Profile"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  service?: Prisma.ServiceListRelationFilter
+  review?: Prisma.ReviewListRelationFilter
 }, "id" | "userId">
 
 export type ProfileOrderByWithAggregationInput = {
@@ -221,11 +333,19 @@ export type ProfileOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   profilePhoto?: Prisma.SortOrderInput | Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience_years?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrderInput | Prisma.SortOrder
+  rating_avg?: Prisma.SortOrderInput | Prisma.SortOrder
+  review_count?: Prisma.SortOrderInput | Prisma.SortOrder
+  availability_slots?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfileCountOrderByAggregateInput
+  _avg?: Prisma.ProfileAvgOrderByAggregateInput
   _max?: Prisma.ProfileMaxOrderByAggregateInput
   _min?: Prisma.ProfileMinOrderByAggregateInput
+  _sum?: Prisma.ProfileSumOrderByAggregateInput
 }
 
 export type ProfileScalarWhereWithAggregatesInput = {
@@ -236,6 +356,12 @@ export type ProfileScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   profilePhoto?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   bio?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  experience_years?: Prisma.IntNullableWithAggregatesFilter<"Profile"> | number | null
+  location?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  hourly_rate?: Prisma.DecimalNullableWithAggregatesFilter<"Profile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.DecimalNullableWithAggregatesFilter<"Profile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.IntNullableWithAggregatesFilter<"Profile"> | number | null
+  availability_slots?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
 }
@@ -244,9 +370,17 @@ export type ProfileCreateInput = {
   id?: string
   profilePhoto?: string | null
   bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfileInput
+  service?: Prisma.ServiceCreateNestedManyWithoutProfileInput
+  review?: Prisma.ReviewCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -254,17 +388,33 @@ export type ProfileUncheckedCreateInput = {
   userId: string
   profilePhoto?: string | null
   bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  service?: Prisma.ServiceUncheckedCreateNestedManyWithoutProfileInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  service?: Prisma.ServiceUpdateManyWithoutProfileNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -272,8 +422,16 @@ export type ProfileUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  service?: Prisma.ServiceUncheckedUpdateManyWithoutProfileNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -281,6 +439,12 @@ export type ProfileCreateManyInput = {
   userId: string
   profilePhoto?: string | null
   bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -289,6 +453,12 @@ export type ProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -298,6 +468,12 @@ export type ProfileUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -307,8 +483,21 @@ export type ProfileCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   profilePhoto?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  experience_years?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrder
+  rating_avg?: Prisma.SortOrder
+  review_count?: Prisma.SortOrder
+  availability_slots?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProfileAvgOrderByAggregateInput = {
+  experience_years?: Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrder
+  rating_avg?: Prisma.SortOrder
+  review_count?: Prisma.SortOrder
 }
 
 export type ProfileMaxOrderByAggregateInput = {
@@ -316,6 +505,12 @@ export type ProfileMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   profilePhoto?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  experience_years?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrder
+  rating_avg?: Prisma.SortOrder
+  review_count?: Prisma.SortOrder
+  availability_slots?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -325,8 +520,26 @@ export type ProfileMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   profilePhoto?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  experience_years?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrder
+  rating_avg?: Prisma.SortOrder
+  review_count?: Prisma.SortOrder
+  availability_slots?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProfileSumOrderByAggregateInput = {
+  experience_years?: Prisma.SortOrder
+  hourly_rate?: Prisma.SortOrder
+  rating_avg?: Prisma.SortOrder
+  review_count?: Prisma.SortOrder
+}
+
+export type ProfileScalarRelationFilter = {
+  is?: Prisma.ProfileWhereInput
+  isNot?: Prisma.ProfileWhereInput
 }
 
 export type ProfileNullableScalarRelationFilter = {
@@ -334,16 +547,48 @@ export type ProfileNullableScalarRelationFilter = {
   isNot?: Prisma.ProfileWhereInput | null
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type ProfileCreateNestedOneWithoutReviewInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutReviewInput, Prisma.ProfileUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutReviewInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutReviewNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutReviewInput, Prisma.ProfileUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutReviewInput
+  upsert?: Prisma.ProfileUpsertWithoutReviewInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutReviewInput, Prisma.ProfileUpdateWithoutReviewInput>, Prisma.ProfileUncheckedUpdateWithoutReviewInput>
+}
+
+export type ProfileCreateNestedOneWithoutServiceInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutServiceInput, Prisma.ProfileUncheckedCreateWithoutServiceInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutServiceInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutServiceNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutServiceInput, Prisma.ProfileUncheckedCreateWithoutServiceInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutServiceInput
+  upsert?: Prisma.ProfileUpsertWithoutServiceInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutServiceInput, Prisma.ProfileUpdateWithoutServiceInput>, Prisma.ProfileUncheckedUpdateWithoutServiceInput>
 }
 
 export type ProfileCreateNestedOneWithoutUserInput = {
@@ -378,20 +623,196 @@ export type ProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutUserInput, Prisma.ProfileUpdateWithoutUserInput>, Prisma.ProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type ProfileCreateWithoutReviewInput = {
+  id?: string
+  profilePhoto?: string | null
+  bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProfileInput
+  service?: Prisma.ServiceCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutReviewInput = {
+  id?: string
+  userId: string
+  profilePhoto?: string | null
+  bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  service?: Prisma.ServiceUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutReviewInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutReviewInput, Prisma.ProfileUncheckedCreateWithoutReviewInput>
+}
+
+export type ProfileUpsertWithoutReviewInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutReviewInput, Prisma.ProfileUncheckedUpdateWithoutReviewInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutReviewInput, Prisma.ProfileUncheckedCreateWithoutReviewInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutReviewInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutReviewInput, Prisma.ProfileUncheckedUpdateWithoutReviewInput>
+}
+
+export type ProfileUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  service?: Prisma.ServiceUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  service?: Prisma.ServiceUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutServiceInput = {
+  id?: string
+  profilePhoto?: string | null
+  bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProfileInput
+  review?: Prisma.ReviewCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutServiceInput = {
+  id?: string
+  userId: string
+  profilePhoto?: string | null
+  bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutServiceInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutServiceInput, Prisma.ProfileUncheckedCreateWithoutServiceInput>
+}
+
+export type ProfileUpsertWithoutServiceInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutServiceInput, Prisma.ProfileUncheckedUpdateWithoutServiceInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutServiceInput, Prisma.ProfileUncheckedCreateWithoutServiceInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutServiceInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutServiceInput, Prisma.ProfileUncheckedUpdateWithoutServiceInput>
+}
+
+export type ProfileUpdateWithoutServiceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutServiceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutProfileNestedInput
+}
+
 export type ProfileCreateWithoutUserInput = {
   id?: string
   profilePhoto?: string | null
   bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  service?: Prisma.ServiceCreateNestedManyWithoutProfileInput
+  review?: Prisma.ReviewCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateWithoutUserInput = {
   id?: string
   profilePhoto?: string | null
   bio?: string | null
+  experience_years?: number | null
+  location?: string | null
+  hourly_rate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: number | null
+  availability_slots?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  service?: Prisma.ServiceUncheckedCreateNestedManyWithoutProfileInput
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileCreateOrConnectWithoutUserInput = {
@@ -414,18 +835,72 @@ export type ProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  service?: Prisma.ServiceUpdateManyWithoutProfileNestedInput
+  review?: Prisma.ReviewUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   profilePhoto?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience_years?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourly_rate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  rating_avg?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  review_count?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  availability_slots?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  service?: Prisma.ServiceUncheckedUpdateManyWithoutProfileNestedInput
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutProfileNestedInput
 }
 
+
+/**
+ * Count Type ProfileCountOutputType
+ */
+
+export type ProfileCountOutputType = {
+  service: number
+  review: number
+}
+
+export type ProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  service?: boolean | ProfileCountOutputTypeCountServiceArgs
+  review?: boolean | ProfileCountOutputTypeCountReviewArgs
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileCountOutputType
+   */
+  select?: Prisma.ProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountServiceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountReviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
 
 
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -433,9 +908,18 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   profilePhoto?: boolean
   bio?: boolean
+  experience_years?: boolean
+  location?: boolean
+  hourly_rate?: boolean
+  rating_avg?: boolean
+  review_count?: boolean
+  availability_slots?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  service?: boolean | Prisma.Profile$serviceArgs<ExtArgs>
+  review?: boolean | Prisma.Profile$reviewArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -443,6 +927,12 @@ export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   profilePhoto?: boolean
   bio?: boolean
+  experience_years?: boolean
+  location?: boolean
+  hourly_rate?: boolean
+  rating_avg?: boolean
+  review_count?: boolean
+  availability_slots?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -453,6 +943,12 @@ export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   userId?: boolean
   profilePhoto?: boolean
   bio?: boolean
+  experience_years?: boolean
+  location?: boolean
+  hourly_rate?: boolean
+  rating_avg?: boolean
+  review_count?: boolean
+  availability_slots?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -463,13 +959,22 @@ export type ProfileSelectScalar = {
   userId?: boolean
   profilePhoto?: boolean
   bio?: boolean
+  experience_years?: boolean
+  location?: boolean
+  hourly_rate?: boolean
+  rating_avg?: boolean
+  review_count?: boolean
+  availability_slots?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "profilePhoto" | "bio" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "profilePhoto" | "bio" | "experience_years" | "location" | "hourly_rate" | "rating_avg" | "review_count" | "availability_slots" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  service?: boolean | Prisma.Profile$serviceArgs<ExtArgs>
+  review?: boolean | Prisma.Profile$reviewArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -482,12 +987,20 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Profile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    service: Prisma.$ServicePayload<ExtArgs>[]
+    review: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     profilePhoto: string | null
     bio: string | null
+    experience_years: number | null
+    location: string | null
+    hourly_rate: runtime.Decimal | null
+    rating_avg: runtime.Decimal | null
+    review_count: number | null
+    availability_slots: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["profile"]>
@@ -885,6 +1398,8 @@ readonly fields: ProfileFieldRefs;
 export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  service<T extends Prisma.Profile$serviceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$serviceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  review<T extends Prisma.Profile$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -918,6 +1433,12 @@ export interface ProfileFieldRefs {
   readonly userId: Prisma.FieldRef<"Profile", 'String'>
   readonly profilePhoto: Prisma.FieldRef<"Profile", 'String'>
   readonly bio: Prisma.FieldRef<"Profile", 'String'>
+  readonly experience_years: Prisma.FieldRef<"Profile", 'Int'>
+  readonly location: Prisma.FieldRef<"Profile", 'String'>
+  readonly hourly_rate: Prisma.FieldRef<"Profile", 'Decimal'>
+  readonly rating_avg: Prisma.FieldRef<"Profile", 'Decimal'>
+  readonly review_count: Prisma.FieldRef<"Profile", 'Int'>
+  readonly availability_slots: Prisma.FieldRef<"Profile", 'String'>
   readonly createdAt: Prisma.FieldRef<"Profile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Profile", 'DateTime'>
 }
@@ -1318,6 +1839,54 @@ export type ProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Profiles to delete.
    */
   limit?: number
+}
+
+/**
+ * Profile.service
+ */
+export type Profile$serviceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Service
+   */
+  select?: Prisma.ServiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Service
+   */
+  omit?: Prisma.ServiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceWhereInput
+  orderBy?: Prisma.ServiceOrderByWithRelationInput | Prisma.ServiceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceScalarFieldEnum | Prisma.ServiceScalarFieldEnum[]
+}
+
+/**
+ * Profile.review
+ */
+export type Profile$reviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**
