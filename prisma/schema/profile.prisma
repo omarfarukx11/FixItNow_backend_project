@@ -1,12 +1,20 @@
 model Profile {
-    id String @id @default(uuid())
-    userId String @unique
-    user User @relation(fields: [userId] , references: [id])
-    profilePhoto String?
-    bio String?
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profilePhoto       String?
+  bio                String?
+  experience_years   Int?     @default(0)
+  location           String?
+  hourly_rate        Decimal? @db.Decimal(10, 2)
+  rating_avg         Decimal? @default(0.0) @db.Decimal(3, 2)
+  review_count       Int?     @default(0)
+  availability_slots String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
+  service Service[]
+  review  Review[]
 
-    @@map("profile")
+  @@map("profile")
 }

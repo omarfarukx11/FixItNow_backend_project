@@ -1,0 +1,17 @@
+model Booking {
+  id             String        @id @default(uuid())
+  customer_id    String
+  user           User          @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  service_id     String
+  service        Service       @relation(fields: [service_id], references: [id], onDelete: Cascade)
+  status         BookingStatus @default(REQUESTED)
+  scheduled_date DateTime
+  time_slot      String        @db.VarChar(100)
+  total_amount   Decimal       @db.Decimal(10, 2)
+  booking_at     DateTime      @default(now())
+
+  payment Payment?
+  review  Review?
+
+  @@map("booking")
+}

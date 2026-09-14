@@ -9,5 +9,13 @@ const createToken = (
   return token;
 };
 
+const verifyToken = (token : string, secret : string) => {
+  try {
+    const verifiedToken = jwt.verify(token , secret)
+  return verifiedToken
+  } catch (error) {
+    throw new Error("Invalid Token")
+  }
+}
 
-export const jwtUtitly = {createToken};
+export const jwtUtitly = {createToken , verifyToken};
