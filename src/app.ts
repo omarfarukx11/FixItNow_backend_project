@@ -6,6 +6,7 @@ import config from "./config";
 import cookieParser from "cookie-parser";
 import { authRouter } from "./modules/auth/auth.route";
 import { userRouter } from "./modules/user/user.route";
+import { categoryRoute } from "./modules/category/category.route";
 
 
 app.use(cors({origin : config.app_url , credentials : true}))
@@ -19,5 +20,6 @@ app.get("/" , (req : Request, res : Response ) => {
 
 app.use("/api/auth" , authRouter)
 app.use("/api/user" , userRouter)
+app.use("/api/v1" , categoryRoute)
 
 export default app;
