@@ -53,9 +53,21 @@ const updateCategory = catchAsync(async (req: Request, res: Response, next: Next
   })
 })
 
+const deleteCategory = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id
+  const result = await categoryService.deleteCategory(id as string )
+  sendResponse(res , {
+    success: true,
+      statusCode: HttpStatus.OK,
+      message: "Category deleted Successfully",
+      data: result,
+  })
+})
+
 export const categoryController = {
   createCategory,
   getCategoy,
   getSingleCategory,
-  updateCategory
+  updateCategory,
+  deleteCategory
 };
