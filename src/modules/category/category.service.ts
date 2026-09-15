@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { CategoryInterface } from "./category.interface";
+
 
 const createCategory = async (payload: CategoryInterface) => {
   const { name, description } = payload;
@@ -22,6 +22,12 @@ const createCategory = async (payload: CategoryInterface) => {
   return createCategory;
 };
 
+const getCategory = async () => {
+  const result = await prisma.category.findMany();
+  return result;
+};
+
 export const categoryService = {
   createCategory,
+  getCategory,
 };
