@@ -9,5 +9,6 @@ const route = Router()
 route.post("/categories" , auth(Role.ADMIN) , categoryController.createCategory )
 route.get("/categories" ,  categoryController.getCategoy )
 route.get("/categories/:id" ,  categoryController.getSingleCategory )
+route.patch("/categories/:id" , auth(Role.ADMIN),  categoryController.updateCategory )
 
 export const categoryRoute = route

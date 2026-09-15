@@ -36,8 +36,20 @@ const getSingleCategory = async (id: string) => {
   return result;
 };
 
+const updateCategory = async (id: string, payload: CategoryInterface) => {
+  const result = await prisma.category.update({
+    where: { id },
+    data: {
+      name: payload.name,
+      description: payload.description,
+    },
+  });
+  return result;
+};
+
 export const categoryService = {
   createCategory,
   getCategory,
   getSingleCategory,
+  updateCategory,
 };
