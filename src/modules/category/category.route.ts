@@ -8,5 +8,6 @@ const route = Router()
 
 route.post("/categories" , auth(Role.ADMIN) , categoryController.createCategory )
 route.get("/categories" ,  categoryController.getCategoy )
+route.get("/categories/:id" ,  categoryController.getSingleCategory )
 
 export const categoryRoute = route
