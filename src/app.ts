@@ -21,7 +21,7 @@ app.get("/" , (req : Request, res : Response ) => {
 })
 
 app.use("/api/auth" , authRouter)
-app.use("/api/profile" , profileRouter)
+app.use("/api/technician" , profileRouter)
 app.use("/api/user" , userRouter)
 app.use("/api/v1" , categoryRoute , serviceRoute)
 

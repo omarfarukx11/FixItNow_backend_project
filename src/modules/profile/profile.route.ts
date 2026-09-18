@@ -6,6 +6,7 @@ import { profileController } from "./profile.controller";
 
 
 const roter  = Router()
-roter.get("/me" ,auth(Role.TECHNICIAN) , profileController.getMyProfile)
+roter.get("/profile" ,auth(Role.TECHNICIAN) , profileController.getMyProfile)
+roter.patch("/profile",auth(Role.TECHNICIAN) , profileController.updateMyProfile)
 
 export const profileRouter = roter;
