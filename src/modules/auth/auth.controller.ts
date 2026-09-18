@@ -20,14 +20,14 @@ const createUser = catchAsync(
 
 const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const payload = req.body;
-  const {accessToken , refershToken} = await authService.loginUserIntoDB(payload)
+  const {accessToken , refreshToken} = await authService.loginUserIntoDB(payload)
   res.cookie("accessToken" , accessToken , {
     httpOnly : true,
     secure : false,
     sameSite : "none",
     maxAge : 1000 * 60 * 60 * 24
   })
-  res.cookie("refreshToken" , refershToken , {
+  res.cookie("refreshToken" , refreshToken , {
     httpOnly : true,
     secure : false,
     sameSite :"none",
@@ -37,7 +37,7 @@ const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunct
     success : true,
     statusCode : HttpStatus.OK,
     message : "user login successfully",
-    data : {accessToken , refershToken}
+    data : {accessToken , refreshToken}
   })
 })
 
