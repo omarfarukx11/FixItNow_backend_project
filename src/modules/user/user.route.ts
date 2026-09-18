@@ -4,7 +4,7 @@ import { auth } from "../../middlewares/auth";
 import { Role } from "../../../prisma/generated/prisma/enums";
 
 
-const roter  = Router()
-roter.get("/me" ,auth(Role.TECHNICIAN) , userController.getMyProfile)
+const route = Router()
+route.get("/me" , auth(Role.ADMIN) , userController.getAllUsers)
 
-export const userRouter = roter;
+export const userRouter = route;
