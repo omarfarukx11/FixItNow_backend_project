@@ -80,6 +80,8 @@ const updateMyProfile = async (
   return result;
 };
 
+
+
 export const technicianService = {
   getMyProfile,
   updateMyProfile,

@@ -40,13 +40,14 @@ const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunct
     data : {accessToken , refreshToken}
   })
 })
+
 const getCurrentUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const id = req.user?.id;
     const result = await authService.getCurrentUser(id as string)
     sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
-      message: "User info reatrieved successfully",
+      message: "User info retrieved successfully",
       data: result,
     });
 })

@@ -39,6 +39,7 @@ const updateMyProfile = catchAsync(async(req: Request, res: Response, next: Next
     });
 })
 
+
 export const technicianController = {
   getMyProfile,
   updateMyProfile,
