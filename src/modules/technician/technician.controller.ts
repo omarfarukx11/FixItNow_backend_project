@@ -39,8 +39,19 @@ const updateMyProfile = catchAsync(async(req: Request, res: Response, next: Next
     });
 })
 
+const getAllTechnician = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query
+    const result = await technicianService.getAllTechnician(query)
+    sendResponse(res , {
+      success : true,
+      statusCode : HttpStatus.OK,
+      message : "All Technician info retrieved successfully",
+      data : result
+    })
+})
 
 export const technicianController = {
   getMyProfile,
   updateMyProfile,
+  getAllTechnician
 };

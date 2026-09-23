@@ -13,4 +13,4 @@ const getAllUsers = async () => {
   return result
 }
 
-export const userService = { getAllUsers };
+export const adminService = { getAllUsers };

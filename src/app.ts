@@ -4,12 +4,12 @@ import cors from "cors";
 
 import config from "./config";
 import cookieParser from "cookie-parser";
-import { authRouter } from "./modules/auth/auth.route";
-import { userRouter } from "./modules/user/user.route";
-import { categoryRoute } from "./modules/category/category.route";
-import { serviceRoute } from "./modules/service/service.route";
-import { technicianRouter } from "./modules/technician/technician.route";
-import { publicRoute } from "./modules/public/public.route";
+import { authrouter } from "./modules/auth/auth.route";
+import { categoryRouter } from "./modules/category/category.route";
+import { serviceRouter } from "./modules/service/service.route";
+import { technicianrouter } from "./modules/technician/technician.route";
+import { adminRouter } from "./modules/user/user.route";
+
 
 
 app.use(cors({origin : config.app_url , credentials : true}))
@@ -21,11 +21,13 @@ app.get("/" , (req : Request, res : Response ) => {
   res.send("hello world")
 })
 
-app.use("/api/auth" , authRouter)
-app.use("/api" , publicRoute)
-app.use("/api/technician" , technicianRouter)
-app.use("/api/user" , userRouter)
-app.use("/api/v1" , categoryRoute , serviceRoute)
+
+app.use("/api/auth" , authrouter)
+app.use("/api/technician" , technicianrouter)
+app.use("/api" , technicianrouter)
+app.use("/api/admin" , adminRouter)
+app.use("/api" , categoryRouter )
+app.use("/api" , serviceRouter)
 
 
 export default app;

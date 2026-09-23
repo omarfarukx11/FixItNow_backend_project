@@ -1,10 +1,10 @@
-import { Router } from "express";
-import { userController } from "./user.controller";
+import { adminController } from "./user.controller";
 import { auth } from "../../middlewares/auth";
 import { Role } from "../../../prisma/generated/prisma/enums";
+import { Router } from "express";
 
 
-const route = Router()
-route.get("/me" , auth(Role.ADMIN) , userController.getAllUsers)
+const router = Router()
+router.get("/users" , auth(Role.ADMIN) , adminController.getAllUsers)
 
-export const userRouter = route;
+export const adminRouter = router;
