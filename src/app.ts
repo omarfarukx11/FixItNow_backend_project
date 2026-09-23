@@ -8,7 +8,7 @@ import { authRouter } from "./modules/auth/auth.route";
 import { userRouter } from "./modules/user/user.route";
 import { categoryRoute } from "./modules/category/category.route";
 import { serviceRoute } from "./modules/service/service.route";
-import { profileRouter } from "./modules/profile/profile.route";
+import { technicianRouter } from "./modules/technician/technician.route";
 
 
 app.use(cors({origin : config.app_url , credentials : true}))
@@ -21,7 +21,7 @@ app.get("/" , (req : Request, res : Response ) => {
 })
 
 app.use("/api/auth" , authRouter)
-app.use("/api/technician" , profileRouter)
+app.use("/api/technician" , technicianRouter)
 app.use("/api/user" , userRouter)
 app.use("/api/v1" , categoryRoute , serviceRoute)
 

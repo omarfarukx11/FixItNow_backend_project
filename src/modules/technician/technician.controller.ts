@@ -5,7 +5,7 @@ import { jwtUtitly } from "../../utility/jwt";
 
 import { sendResponse } from "../../utility/sendResponse";
 import HttpStatus from "http-status";
-import { profileService } from "./profile.service";
+import { technicianService } from "./technician.service";
 
 const getMyProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +17,7 @@ const getMyProfile = catchAsync(
     if (typeof verrifyToken === "string") {
       throw new Error(verrifyToken);
     }
-    const profile = await profileService.getMyProfile(verrifyToken.id);
+    const profile = await technicianService.getMyProfile(verrifyToken.id);
     sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
@@ -30,7 +30,7 @@ const getMyProfile = catchAsync(
 const updateMyProfile = catchAsync(async(req: Request, res: Response, next: NextFunction) => {
   const id = req.user?.id;
   const payload = req.body;
-  const result = await profileService.updateMyProfile(id as string , payload)
+  const result = await technicianService.updateMyProfile(id as string , payload)
   sendResponse(res, {
       success: true,
       statusCode: HttpStatus.OK,
@@ -39,7 +39,7 @@ const updateMyProfile = catchAsync(async(req: Request, res: Response, next: Next
     });
 })
 
-export const profileController = {
+export const technicianController = {
   getMyProfile,
   updateMyProfile,
 };

@@ -1,6 +1,6 @@
 import { Role } from "../../../prisma/generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
-import { UpdateProfileInterface } from "./profile.interface";
+import { UpdateProfileInterface } from "./technician.interface";
 
 const getMyProfile = async (userId: string) => {
   const technicianProfile = await prisma.user.findUniqueOrThrow({
@@ -80,7 +80,7 @@ const updateMyProfile = async (
   return result;
 };
 
-export const profileService = {
+export const technicianService = {
   getMyProfile,
   updateMyProfile,
 };

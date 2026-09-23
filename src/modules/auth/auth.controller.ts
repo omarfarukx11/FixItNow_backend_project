@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import HttpStatus from "http-status";
-
 import { sendResponse } from "../../utility/sendResponse";
 import { catchAsync } from "../../utility/catchAsync";
 import { authService } from "./auth.service";
+
 
 const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -40,8 +40,19 @@ const loginUser = catchAsync(async (req: Request, res: Response, next: NextFunct
     data : {accessToken , refreshToken}
   })
 })
+const getCurrentUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.user?.id;
+    const result = await authService.getCurrentUser(id as string)
+    sendResponse(res, {
+      success: true,
+      statusCode: HttpStatus.OK,
+      message: "User info reatrieved successfully",
+      data: result,
+    });
+})
 
 export const authController = { 
   createUser,
   loginUser,
+  getCurrentUser,
 };
