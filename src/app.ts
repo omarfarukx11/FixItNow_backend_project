@@ -8,7 +8,7 @@ import { authrouter } from "./modules/auth/auth.route";
 import { categoryRouter } from "./modules/category/category.route";
 import { serviceRouter } from "./modules/service/service.route";
 import { technicianrouter } from "./modules/technician/technician.route";
-import { adminRouter } from "./modules/user/user.route";
+import { adminRouter } from "./modules/admin/admin.route";
 
 
 

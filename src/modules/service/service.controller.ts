@@ -18,6 +18,19 @@ const createServices = catchAsync(
   },
 );
 
+const getAllServices = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const query = req.query;
+    const result = await serviceService.getAllServices(query)
+    sendResponse(res,{
+      success : true,
+      statusCode : HttpStatus.OK,
+      message : "Services retrieved successfully",
+      data : result
+    })
+  },
+);
 export const serviceContoller = {
   createServices,
+  getAllServices,
 };

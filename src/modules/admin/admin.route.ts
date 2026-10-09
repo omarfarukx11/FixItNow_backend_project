@@ -1,4 +1,4 @@
-import { adminController } from "./user.controller";
+import { adminController } from "./admin.controller";
 import { auth } from "../../middlewares/auth";
 import { Role } from "../../../prisma/generated/prisma/enums";
 import { Router } from "express";

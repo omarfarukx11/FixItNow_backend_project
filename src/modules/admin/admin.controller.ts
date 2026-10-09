@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utility/catchAsync";
-import { adminService } from "./user.service";
+import { adminService } from "./admin.service";
 import { sendResponse } from "../../utility/sendResponse";
 import  HttpStatus  from "http-status";
 

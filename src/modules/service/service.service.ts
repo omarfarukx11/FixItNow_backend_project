@@ -1,5 +1,6 @@
+import { ServiceWhereInput } from "../../../prisma/generated/prisma/models";
 import { prisma } from "../../lib/prisma";
-import { ServiceInterface } from "./service.interface";
+import { ServiceInterface, ServiceQueryInterface} from "./service.interface";
 
 const createService = async (profileId: string, payload: ServiceInterface) => {
   const { category_id, title, description, price } = payload;
@@ -31,6 +32,50 @@ const createService = async (profileId: string, payload: ServiceInterface) => {
   return result;
 };
 
+
+const getAllServices = async (query : ServiceQueryInterface) => {
+  const limit = query.limit ? Number(query.limit) : 10;
+  const page = query.page ? Number(query.page) : 1;
+  const skip = (page - 1) * limit;
+  const andCondition : ServiceWhereInput[] = []
+
+  if(query.searchTerm) {
+    andCondition.push({
+      OR : [
+        {
+          title :{
+            contains : query.searchTerm,
+            mode : "insensitive"
+          },
+        },
+          {
+            description : {
+              contains : query.searchTerm,
+              mode : "insensitive"
+            }
+          }
+      ]
+    })
+  }
+  // Price filter
+  if(query.minPrice || query.maxPrice) {
+    andCondition.push({
+      price : {
+        ...(query.minPrice && {
+          gte : Number(query.minPrice)
+        }),
+        ...(query.maxPrice && {
+          lte : Number(query.maxPrice)
+        }),
+      }
+    })
+  }
+  
+
+}
+
 export const serviceService = {
   createService,
+  getAllServices
 };
+
